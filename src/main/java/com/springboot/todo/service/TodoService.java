@@ -1,10 +1,12 @@
 package com.springboot.todo.service;
+import com.springboot.todo.exception.DuplicateEntryException;
 import com.springboot.todo.model.Todo;
 import com.springboot.todo.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TodoService {
@@ -20,7 +22,11 @@ public class TodoService {
         return todoRepository.findById(id).get();
     }
 
-    public Todo addTodo(Todo todo) {
+    public Todo addTodo(Todo todo) throws DuplicateEntryException {
+        Optional<Todo> todoAtRepo = todoRepository.findByName(todo.getName());
+        if(todoAtRepo != null) {
+            throw new DuplicateEntryException("Todo already exist with given name:" + todo.getName());
+        }
         return todoRepository.save(todo);
     }
 

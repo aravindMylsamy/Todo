@@ -1,4 +1,5 @@
 package com.springboot.todo.controller;
+import com.springboot.todo.exception.DuplicateEntryException;
 import com.springboot.todo.model.Todo;
 import com.springboot.todo.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class TodoController {
     }
 
     @PostMapping("/todo")
-    public Todo addTodo(@RequestBody Todo todo) {
+    public Todo addTodo(@RequestBody Todo todo) throws DuplicateEntryException {
         return todoService.addTodo(todo);
     }
 
