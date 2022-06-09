@@ -42,7 +42,7 @@ public class TodoController {
     @DeleteMapping("/todo/{id}")
     public ResponseEntity<?> deleteTodoByName(@PathVariable int id) {
         todoService.deleteTodo(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 }

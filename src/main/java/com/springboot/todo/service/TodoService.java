@@ -19,12 +19,16 @@ public class TodoService {
     }
 
     public Todo getTodoById(int id) {
-        return todoRepository.findById(id).get();
+        Optional<Todo> todoAtRepo = todoRepository.findById(id);
+        if (todoAtRepo.isPresent()) {
+            return todoAtRepo.get();
+        }
+         return null;
     }
 
     public Todo addTodo(Todo todo) throws DuplicateEntryException {
         Optional<Todo> todoAtRepo = todoRepository.findByName(todo.getName());
-        if(todoAtRepo != null) {
+        if(todoAtRepo.isPresent()) {
             throw new DuplicateEntryException("Todo already exist with given name:" + todo.getName());
         }
         return todoRepository.save(todo);
